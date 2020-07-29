@@ -5,14 +5,18 @@ const router = express.Router();
 /* GET books listing. */
 router.get('/', async function(req, res, next) {
   let books = await dataBooks.getBooks();
-
   res.send(books);
 });
 
 router.get('/:title', async (req, res, next)=>{
-    let book = await dataBooks.getBooks(req.params.title);
+    let book = await dataBooks.getBook(req.params.title);
     res.send(book);
 });
+
+// router.get('/:stract', async (req, res, next)=>{
+//     let book = await dataBooks.findIntoBook(req.params.stract);
+//     res.send(book);
+// });
 
 router.post('/', async (req, res, next)=>{
     let result = await dataInventors.pushInventor(

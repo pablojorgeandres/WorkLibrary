@@ -14,9 +14,18 @@ async function getBook(bookTitle){
     const clientmongo = await connection.getConnection();
     const doc = await clientmongo.db("Books_Of_Work")
         .collection("books")
-        .findOne({_id: parseInt(bookTitle)});
+        .find({$text: { $search: bookTitle}});
     
     return doc;
+}
+
+async function findIntoBook(extract){
+    const clientmongo = await connection.getConnection();
+    const stract = await clientmongo.db("Books_Of_Work")
+        .collection("books")
+        .findOne({ content: extract });
+    
+    return stract;
 }
 
 async function pushBook(book){
@@ -56,4 +65,4 @@ async function deleteInventor(bookTitle){
     return result;
 }
 
-module.exports = {getBooks, getBook, updateInventor, pushBook, deleteInventor};
+module.exports = {getBooks, getBook, findIntoBook, updateInventor, pushBook, deleteInventor};
